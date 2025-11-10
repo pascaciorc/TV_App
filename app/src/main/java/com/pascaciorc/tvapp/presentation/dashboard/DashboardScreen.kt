@@ -1,5 +1,6 @@
 package com.pascaciorc.tvapp.presentation.dashboard
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -16,31 +17,43 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
 
 @Composable
 fun DashboardScreen(
     modifier: Modifier,
+    onTileClicked: (MediaItem) -> Unit,
+    viewModel: DashboardViewModel = hiltViewModel()
 ) {
+    val state by viewModel.uiState.collectAsState()
     LazyColumn(
         modifier = modifier
             .fillMaxSize()
             .padding()
     ) {
-        items(items = sampleCategories) { category ->
-            CategorySection(category)
+        items(items = state.data) { category ->
+            CategorySection(
+                category,
+                onTileClicked
+            )
         }
     }
 }
 
 @Composable
-fun CategorySection(category: Category) {
+fun CategorySection(
+    category: Category,
+    onTileClicked: (MediaItem) -> Unit,
+) {
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -60,7 +73,10 @@ fun CategorySection(category: Category) {
             horizontalArrangement = Arrangement.spacedBy(12.dp)
         ) {
             items(category.items) { item ->
-                MediaTile(item)
+                MediaTile(
+                    item,
+                    onTileClicked
+                )
             }
         }
     }
@@ -68,11 +84,17 @@ fun CategorySection(category: Category) {
 
 @OptIn(ExperimentalGlideComposeApi::class)
 @Composable
-fun MediaTile(item: MediaItem) {
+fun MediaTile(
+    item: MediaItem,
+    onTileClicked: (MediaItem) -> Unit
+) {
     Column(
         modifier = Modifier
             .width(120.dp)
             .clip(RoundedCornerShape(12.dp))
+            .clickable {
+                onTileClicked.invoke(item)
+            }
     ) {
         GlideImage(
             model = item.thumbnailUrl,
@@ -93,27 +115,3 @@ fun MediaTile(item: MediaItem) {
         )
     }
 }
-
-private val sampleCategories = listOf(
-    Category(
-        id = "1",
-        title = "Trending Now",
-        items = List(10) {
-            MediaItem("$it", "Movie $it", "https://picsum.photos/400/600?random=$it")
-        }
-    ),
-    Category(
-        id = "2",
-        title = "New Releases",
-        items = List(10) {
-            MediaItem("$it", "New $it", "https://picsum.photos/400/600?blur=$it")
-        }
-    ),
-    Category(
-        id = "3",
-        title = "Recommended for You",
-        items = List(10) {
-            MediaItem("$it", "Show $it", "https://picsum.photos/400/600?grayscale&$it")
-        }
-    )
-)

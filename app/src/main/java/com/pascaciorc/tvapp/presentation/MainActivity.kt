@@ -16,7 +16,9 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.pascaciorc.tvapp.presentation.dashboard.DashboardScreen
 import com.pascaciorc.tvapp.presentation.theme.TVAppTheme
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,7 +33,10 @@ class MainActivity : ComponentActivity() {
                     ) {
                         composable<DashboardScreen> {
                             DashboardScreen(
-                                modifier = Modifier.padding(innerPadding)
+                                modifier = Modifier.padding(innerPadding),
+                                onTileClicked = {
+                                    print(it)
+                                }
                             )
                         }
                     }
