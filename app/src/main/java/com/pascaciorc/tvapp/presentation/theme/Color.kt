@@ -1,4 +1,4 @@
-package com.pascaciorc.tvapp.ui.theme
+package com.pascaciorc.tvapp.presentation.theme
 
 import androidx.compose.ui.graphics.Color
 

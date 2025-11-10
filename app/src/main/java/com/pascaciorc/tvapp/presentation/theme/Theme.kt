@@ -1,6 +1,5 @@
-package com.pascaciorc.tvapp.ui.theme
+package com.pascaciorc.tvapp.presentation.theme
 
-import android.app.Activity
 import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme
