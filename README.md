@@ -14,6 +14,7 @@ The app is built using **Kotlin**, **Jetpack Compose**, and follows the **MVVM a
 - Image loading and caching with **Glide**
 - Seamless navigation using **Navigation Compose**
 - Follows **MVVM architecture** and **Clean Code** principles
+- Test UseCase with **JUnit**
 
 ---
 
