@@ -16,7 +16,7 @@ class DashboardViewModel @Inject constructor(
     private val useCase: GetDashboardDataUseCase
 ) : ViewModel() {
 
-    private val _uiState: MutableStateFlow<DashboardState> = MutableStateFlow(DashboardState())
+    private val _uiState: MutableStateFlow<DashboardUIState> = MutableStateFlow(DashboardUIState())
     val uiState = _uiState.asStateFlow()
 
     init {
@@ -25,9 +25,9 @@ class DashboardViewModel @Inject constructor(
 
     fun loadDashboard() {
         viewModelScope.launch(Dispatchers.IO) {
-            _uiState.update { it.copy(loading = true) }
+            _uiState.update { it.copy(isLoading = true) }
             val data = useCase.invoke()
-            _uiState.update { it.copy(loading = false, data = data) }
+            _uiState.update { it.copy(isLoading = false, data = data) }
         }
     }
 }

@@ -37,7 +37,7 @@ fun DashboardScreen(
     viewModel: DashboardViewModel = hiltViewModel()
 ) {
     val state by viewModel.uiState.collectAsState()
-    if (state.loading) {
+    if (state.isLoading) {
         LoadingWithText()
     } else {
         LazyColumn(
