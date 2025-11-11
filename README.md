@@ -31,3 +31,11 @@ The app is built using **Kotlin**, **Jetpack Compose**, and follows the **MVVM a
 | **Dependency Injection** | Hilt |
 
 ---
+
+## Demo
+
+
+https://github.com/user-attachments/assets/8a913b19-0177-4371-be8e-bf736192e4a2
+
+
+---
