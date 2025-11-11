@@ -33,9 +33,7 @@ import com.pascaciorc.tvapp.presentation.dashboard.MediaItem
 fun MediaItemDetailsScreen(
     modifier: Modifier,
     mediaItem: MediaItem
-    //viewModel: DashboardViewModel = hiltViewModel()
 ) {
-    //val state by viewModel.uiState.collectAsState()
     Column(
         modifier = modifier
             .padding()
