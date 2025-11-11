@@ -32,7 +32,8 @@ import com.pascaciorc.tvapp.presentation.dashboard.MediaItem
 @Composable
 fun MediaItemDetailsScreen(
     modifier: Modifier,
-    mediaItem: MediaItem
+    mediaItem: MediaItem,
+    onPlayClicked: (String) -> Unit
 ) {
     Column(
         modifier = modifier
@@ -59,7 +60,9 @@ fun MediaItemDetailsScreen(
             textAlign = TextAlign.Center
         )
         Button(
-            onClick = { },
+            onClick = {
+                onPlayClicked.invoke("https://storage.googleapis.com/exoplayer-test-media-0/play.mp3")
+            },
             modifier = modifier,
         ) {
             Icon(

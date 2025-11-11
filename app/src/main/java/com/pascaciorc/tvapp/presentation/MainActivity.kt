@@ -19,6 +19,7 @@ import com.google.gson.Gson
 import com.pascaciorc.tvapp.presentation.dashboard.DashboardScreen
 import com.pascaciorc.tvapp.presentation.dashboard.MediaItem
 import com.pascaciorc.tvapp.presentation.mediaitemdetails.MediaItemDetailsScreen
+import com.pascaciorc.tvapp.presentation.player.PlayerScreen
 import com.pascaciorc.tvapp.presentation.theme.TVAppTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -49,9 +50,19 @@ class MainActivity : ComponentActivity() {
                                 ?.let { mediaItem ->
                                     MediaItemDetailsScreen(
                                         modifier = Modifier.padding(innerPadding),
-                                        mediaItem
+                                        mediaItem,
+                                        onPlayClicked = {
+                                            navController.navigate(Player(it))
+                                        }
                                     )
                                 }
+                        }
+                        composable<Player> {
+                            val args = it.toRoute<Player>()
+                            PlayerScreen(
+                                modifier = Modifier.padding(innerPadding),
+                                args.videoUrl
+                            )
                         }
                     }
                 }

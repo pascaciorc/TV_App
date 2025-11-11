@@ -7,3 +7,6 @@ object Dashboard
 
 @Serializable
 data class MediaItemDetails(val mediaItem: String)
+
+@Serializable
+data class Player(val videoUrl: String)
