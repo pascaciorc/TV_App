@@ -14,7 +14,11 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.toRoute
+import com.google.gson.Gson
 import com.pascaciorc.tvapp.presentation.dashboard.DashboardScreen
+import com.pascaciorc.tvapp.presentation.dashboard.MediaItem
+import com.pascaciorc.tvapp.presentation.mediaitemdetails.MediaItemDetailsScreen
 import com.pascaciorc.tvapp.presentation.theme.TVAppTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -29,15 +33,25 @@ class MainActivity : ComponentActivity() {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
                     NavHost(
                         navController = navController,
-                        startDestination = DashboardScreen
+                        startDestination = Dashboard
                     ) {
-                        composable<DashboardScreen> {
+                        composable<Dashboard> {
                             DashboardScreen(
                                 modifier = Modifier.padding(innerPadding),
                                 onTileClicked = {
-                                    print(it)
+                                    navController.navigate(MediaItemDetails(Gson().toJson(it)))
                                 }
                             )
+                        }
+                        composable<MediaItemDetails> {
+                            val args = it.toRoute<MediaItemDetails>()
+                            Gson().fromJson(args.mediaItem, MediaItem::class.java)
+                                ?.let { mediaItem ->
+                                    MediaItemDetailsScreen(
+                                        modifier = Modifier.padding(innerPadding),
+                                        mediaItem
+                                    )
+                                }
                         }
                     }
                 }

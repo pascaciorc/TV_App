@@ -3,4 +3,7 @@ package com.pascaciorc.tvapp.presentation
 import kotlinx.serialization.Serializable
 
 @Serializable
-object DashboardScreen
+object Dashboard
+
+@Serializable
+data class MediaItemDetails(val mediaItem: String)
