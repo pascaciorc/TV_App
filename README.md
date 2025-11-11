@@ -29,6 +29,7 @@ The app is built using **Kotlin**, **Jetpack Compose**, and follows the **MVVM a
 | **Navigation** | Navigation Compose |
 | **Image Loading** | Glide |
 | **Dependency Injection** | Hilt |
+| **UI Test** | JUnit + Mockito |
 
 ---
 
