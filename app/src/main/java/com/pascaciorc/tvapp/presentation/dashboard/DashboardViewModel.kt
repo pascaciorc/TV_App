@@ -18,6 +18,7 @@ class DashboardViewModel @Inject constructor(
 
     private val _uiState: MutableStateFlow<DashboardUIState> = MutableStateFlow(DashboardUIState())
     val uiState = _uiState.asStateFlow()
+    var dashboardData = emptyList<Category>()
 
     init {
         loadDashboard()
@@ -26,8 +27,17 @@ class DashboardViewModel @Inject constructor(
     fun loadDashboard() {
         viewModelScope.launch(Dispatchers.IO) {
             _uiState.update { it.copy(isLoading = true) }
-            val data = useCase.invoke()
-            _uiState.update { it.copy(isLoading = false, data = data) }
+            dashboardData = useCase.invoke()
+            _uiState.update { it.copy(isLoading = false, categories = dashboardData) }
         }
+    }
+
+    fun filterCategories(filterText: String) {
+        val filteredCategories = dashboardData.filter { it.title.startsWith(filterText) }
+        _uiState.update { it.copy(categories = filteredCategories) }
+    }
+
+    fun resetFilter() {
+        _uiState.update { it.copy(categories = dashboardData) }
     }
 }

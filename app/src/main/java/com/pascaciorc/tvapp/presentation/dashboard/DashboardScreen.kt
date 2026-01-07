@@ -16,10 +16,14 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -37,19 +41,39 @@ fun DashboardScreen(
     viewModel: DashboardViewModel = hiltViewModel()
 ) {
     val state by viewModel.uiState.collectAsState()
+    var filterText by remember { mutableStateOf("") }
     if (state.isLoading) {
         LoadingWithText()
     } else {
-        LazyColumn(
+        Column(
             modifier = modifier
                 .fillMaxSize()
                 .padding()
         ) {
-            items(items = state.data) { category ->
-                CategorySection(
-                    category,
-                    onTileClicked
-                )
+            OutlinedTextField(
+                modifier = Modifier.fillMaxWidth(),
+                value = filterText,
+                onValueChange = {
+                    filterText = it
+                    if (filterText.isEmpty()) {
+                        viewModel.resetFilter()
+                    } else {
+                        viewModel.filterCategories(filterText)
+                    }
+                },
+                label = { Text("Filter by...") }
+            )
+            LazyColumn(
+                modifier = modifier
+                    .fillMaxSize()
+                    .padding()
+            ) {
+                items(items = state.categories) { category ->
+                    CategorySection(
+                        category,
+                        onTileClicked
+                    )
+                }
             }
         }
     }
