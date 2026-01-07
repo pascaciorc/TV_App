@@ -14,6 +14,7 @@ The app is built using **Kotlin**, **Jetpack Compose**, and follows the **MVVM a
 - Image loading and caching with **Glide**
 - Seamless navigation using **Navigation Compose**
 - Follows **MVVM architecture** and **Clean Code** principles
+- Test UseCase with **JUnit**
 
 ---
 
@@ -29,5 +30,14 @@ The app is built using **Kotlin**, **Jetpack Compose**, and follows the **MVVM a
 | **Navigation** | Navigation Compose |
 | **Image Loading** | Glide |
 | **Dependency Injection** | Hilt |
+| **UI Test** | JUnit + Mockito |
+
+---
+
+## Demo
+
+
+https://github.com/user-attachments/assets/8a913b19-0177-4371-be8e-bf736192e4a2
+
 
 ---
